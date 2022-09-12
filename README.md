@@ -16,7 +16,7 @@ Cree una base de datos llamada "user_crud" antes de ejecutar el proyecto
 
 En el archivo index.js de la carpeta config, edite usuario y contraseña de su base de datos.
 
-## Installación
+## Instalación
 
 Clone el repositorio
 
