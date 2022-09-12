@@ -9,33 +9,36 @@ const controller = {
     console.log(req.body);
     const { identification, name, date } = req.body;
 
-    const responseFind = await models.user.findOne({ where: { identification: identification } });
-
+    const responseFind = await models.user.findOne({
+      where: { identification: identification },
+    });
 
     if (responseFind)
-    return res.status(400).send({
-      message: `Ya existe un usuario registrado con número : ${responseFind.dataValues.identification}.`,
-    });
+      return res.status(400).send({
+        message: `Ya existe un usuario registrado con número : ${responseFind.dataValues.identification}.`,
+      });
     const response = await models.user.create({
       name: name,
       identification: identification,
       date: date,
     });
 
-    return res.status(200).send("Usario creado");
+    return res.status(200).send("Usario creado correctamente");
   },
 
   edit: async (req, res) => {
-    console.log(req.body)
-    const { id, identification, name, date} = req.body;
+    console.log(req.body);
+    const { id, identification, name, date } = req.body;
 
-    const responseFind = await models.user.findOne({ where: { identification: identification } });
-
-
-    if (responseFind)
-    return res.status(400).send({
-      message: `Ya existe un usuario registrado con número : ${responseFind.dataValues.identification}.`,
+    const responseFind = await models.user.findOne({
+      where: { identification: identification },
     });
+    console.log(responseFind.dataValues);
+
+    if (responseFind && id !== responseFind.dataValues.id)
+      return res.status(400).send({
+        message: `Ya existe un usuario registrado con número : ${responseFind.dataValues.identification}.`,
+      });
 
     const response = await models.user.update(
       {
@@ -58,6 +61,7 @@ const controller = {
   },
 
   delete: async (req, res) => {
+    console.log(req);
     const { id } = req.params;
 
     const response = await models.user.destroy({ where: { id: id } });
